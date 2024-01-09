@@ -1,0 +1,5 @@
+aws-wsgi
+boto3
+flask
+flask-cors
+pydantic
