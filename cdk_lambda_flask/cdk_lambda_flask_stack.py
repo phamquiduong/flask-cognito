@@ -1,5 +1,4 @@
 import os
-import platform
 
 from aws_cdk import Stack, aws_apigateway, aws_lambda
 from constructs import Construct
@@ -21,11 +20,12 @@ class CdkLambdaFlaskStack(Stack):
             id=f"{self.construct_id}-Lambda",
             architecture=aws_lambda.Architecture.ARM_64,
             code=aws_lambda.DockerImageCode.from_image_asset(path_to_function_folder),
+            environment={}
         )
 
     def create_api_gateway(self):
         self.lambda_rest_api = aws_apigateway.LambdaRestApi(
             self,
             id=f'{self.construct_id}-API-Gateway',
-            handler=self.docker_lambda_function
+            handler=self.docker_lambda_function  # type: ignore
         )

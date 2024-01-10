@@ -5,6 +5,7 @@ from apps.auth.schemas.login_schema import LoginRequest
 from apps.auth.services.get_user_service import get_user_service
 from apps.auth.services.login_service import login_service
 from core.decorator import response_jsonify
+from core.logger import logger
 from core.utils.parse_request import parse_request
 
 auth_route = Blueprint('auth', __name__)
@@ -13,7 +14,9 @@ auth_route = Blueprint('auth', __name__)
 @auth_route.post('/login')  # type: ignore
 @response_jsonify(api_code=1)
 def login():
-    request_data = LoginRequest(**parse_request(request))
+    request_data = parse_request(request)
+    logger.info('Login request data: %s', request_data)
+    request_data = LoginRequest(**request_data)
     return login_service(request_data)
 
 

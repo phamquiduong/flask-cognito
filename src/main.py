@@ -3,6 +3,7 @@ from flask import Flask
 from flask_cors import CORS
 
 from core.config import Config
+from core.logger import logger
 
 
 def create_app(config_class=Config):
@@ -20,5 +21,7 @@ def create_app(config_class=Config):
 
 
 def handler(event, context):
+    logger.info('Event: %s', event)
+    logger.info('Context: %s', context)
     app = create_app()
     return awsgi.response(app, event, context)
