@@ -1,19 +1,31 @@
-from aws_cdk import Stack
-from aws_cdk import aws_lambda as _lambda
-from aws_cdk import aws_lambda_python_alpha as _lambda_a
+import os
+import platform
+
+from aws_cdk import Stack, aws_apigateway, aws_lambda
 from constructs import Construct
 
 
 class CdkLambdaFlaskStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
+        self.construct_id = construct_id
 
-        _lambda_a.PythonFunction(
-            scope=self,
-            id='LambdaFunction',
-            entry='./src/',
-            runtime=_lambda.Runtime.PYTHON_3_11,
-            index='main.py',
-            handler='handle',
-            layers=[_lambda_a.PythonLayerVersion(self, "Request", entry="./cdk_lambda_flask/layer/")],
+        self.create_docker_lambda_function()
+        self.create_api_gateway()
+
+    def create_docker_lambda_function(self):
+        path_to_function_folder = os.path.join(os.path.dirname(os.path.dirname(__file__)), "src",)
+
+        self.docker_lambda_function = aws_lambda.DockerImageFunction(
+            self,
+            id=f"{self.construct_id}-Lambda",
+            architecture=aws_lambda.Architecture.ARM_64,
+            code=aws_lambda.DockerImageCode.from_image_asset(path_to_function_folder),
+        )
+
+    def create_api_gateway(self):
+        self.lambda_rest_api = aws_apigateway.LambdaRestApi(
+            self,
+            id=f'{self.construct_id}-API-Gateway',
+            handler=self.docker_lambda_function
         )
