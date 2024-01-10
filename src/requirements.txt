@@ -1,7 +1,12 @@
-aws-wsgi
-boto3
+# Load environment variables
+python-dotenv
+
+# Flask framework
 flask
-flask-cors
+
+# Pydantic
 pydantic
 pydantic[email]
-python-dotenv
+
+# AWS SDK
+boto3

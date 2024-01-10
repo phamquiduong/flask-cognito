@@ -8,6 +8,7 @@ RUN pip3 install --no-cache-dir --upgrade pip
 COPY . .
 
 # Install python dependencies
+RUN pip install -r requirements-cdk.txt
 RUN pip install -r requirements.txt
 
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)

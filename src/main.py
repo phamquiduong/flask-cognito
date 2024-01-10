@@ -1,6 +1,4 @@
-import awsgi
 from flask import Flask
-from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 
 from core.config import Config
@@ -34,7 +32,9 @@ def handler(event, context):
     app = create_app()
 
     logger.info('Config CORS for app')
+    from flask_cors import CORS
     CORS(app)
 
     logger.info('Start awsgi server')
+    import awsgi
     return awsgi.response(app, event, context)

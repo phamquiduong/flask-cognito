@@ -11,3 +11,7 @@ cdk.out
 
 # Environment variables
 .env
+
+# Docker-compose
+docker/nginx/config/nginx.conf
+docker/nginx/log/
