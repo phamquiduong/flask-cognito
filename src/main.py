@@ -4,7 +4,7 @@ from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 
 from core.config import Config
-from core.errors.handle_exception import http_exception_handler
+from core.errors.handle_exception import exception_handler, http_exception_handler
 from core.logger import logger
 
 
@@ -15,6 +15,7 @@ def create_app(config_class=Config):
 
     # Custom exception handler
     app.register_error_handler(HTTPException, http_exception_handler)
+    app.register_error_handler(Exception, exception_handler)
 
     # Register Flask blueprint
     logger.info('Register authenticate blueprint')

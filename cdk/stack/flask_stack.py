@@ -1,6 +1,6 @@
 import os
 
-from aws_cdk import Stack, aws_apigateway, aws_iam, aws_lambda
+from aws_cdk import Duration, Stack, aws_apigateway, aws_iam, aws_lambda
 from constructs import Construct
 
 
@@ -24,6 +24,7 @@ class FlaskStack(Stack):
             self,
             id=f"{self.construct_id}-Lambda",
             code=aws_lambda.DockerImageCode.from_image_asset(path_to_function_folder),
+            timeout=Duration.seconds(30),
             **architecure_config
         )
 
