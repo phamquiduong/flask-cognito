@@ -4,3 +4,4 @@ flask
 flask-cors
 pydantic
 pydantic[email]
+python-dotenv

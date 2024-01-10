@@ -1,7 +1,13 @@
+import os
+
 import aws_cdk as cdk
+from dotenv import load_dotenv
 from stack.flask_stack import FlaskStack
 
-CONSTRUCT_ID = 'Flask'
+if not load_dotenv():
+    raise FileNotFoundError('Load environment variables failed')
+
+CONSTRUCT_ID = os.getenv('CONSTRUCT_ID', 'Flask')
 
 # Create stack app
 app = cdk.App()

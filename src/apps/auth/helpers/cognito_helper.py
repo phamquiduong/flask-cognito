@@ -1,10 +1,12 @@
+import os
+
 import boto3
 
 
 class CognitoHelper:
-    AWS_REGION = "us-east-2"
-    USER_POOL_ID = "us-east-2_wIdYG6VXm"
-    CLIENT_ID = "1bmbid6vk7hd4ai2g0nri3vmr1"
+    AWS_REGION = os.environ['AWS_REGION']
+    USER_POOL_ID = os.environ['USER_POOL_ID']
+    CLIENT_ID = os.environ['CLIENT_ID']
 
     def __init__(self) -> None:
         self.client = boto3.client('cognito-idp', region_name=self.AWS_REGION)

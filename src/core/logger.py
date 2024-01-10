@@ -1,4 +1,5 @@
 import logging
+import os
 
 logger = logging.getLogger()
-logger.setLevel("DEBUG")
+logger.setLevel(os.getenv('LOG_LEVEL', 'DEBUG'))

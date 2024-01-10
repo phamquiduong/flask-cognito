@@ -17,12 +17,14 @@ class FlaskStack(Stack):
     def create_docker_lambda_function(self):
         path_to_function_folder = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "src",)
 
+        is_arm64 = os.getenv('IS_ARM64', 'true').lower() == 'true'
+        architecure_config = {'architecture': aws_lambda.Architecture.ARM_64} if is_arm64 else {}
+
         self.docker_lambda_function = aws_lambda.DockerImageFunction(
             self,
             id=f"{self.construct_id}-Lambda",
-            # architecture=aws_lambda.Architecture.ARM_64,
             code=aws_lambda.DockerImageCode.from_image_asset(path_to_function_folder),
-            environment={}
+            **architecure_config
         )
 
     def add_role_policy_cognito(self):
