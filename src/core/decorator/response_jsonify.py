@@ -2,8 +2,9 @@ from http import HTTPStatus
 
 from flask import Response, jsonify
 from pydantic import BaseModel, ValidationError
+from werkzeug.exceptions import HTTPException
 
-from core.api_exception import APIException, BadRequestException
+from core.errors.api_exception import APIException, BadRequestException
 from core.logger import logger
 
 
@@ -20,12 +21,16 @@ def response_jsonify(status_code: HTTPStatus | int = HTTPStatus.OK, api_code: in
                                            error_fields=error_fields,
                                            message='Invalid request data').dump_response()
             except APIException as api_exc:
-                api_exc.api_code = api_code
                 logger.error(api_exc)
+                api_exc.api_code = api_code
                 return api_exc.dump_response()
-            except Exception as ex:
-                logger.error(ex)
-                return APIException(api_code=api_code, message=str(ex)).dump_response()
+            except HTTPException as http_exc:
+                logger.error(http_exc)
+                return APIException(api_code=api_code, status=http_exc.code,
+                                    message=http_exc.description).dump_response()
+            except Exception as exc:  # pylint: disable=broad-except
+                logger.error(exc)
+                return APIException(api_code=api_code, message=str(exc)).dump_response()
 
             if (isinstance(response, Response)
                     or (isinstance(response, tuple) and isinstance(next(iter(response), None), Response))):
