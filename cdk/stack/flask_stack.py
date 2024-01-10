@@ -1,6 +1,6 @@
 import os
 
-from aws_cdk import Stack, aws_apigateway, aws_lambda
+from aws_cdk import Stack, aws_apigateway, aws_iam, aws_lambda
 from constructs import Construct
 
 
@@ -10,6 +10,8 @@ class FlaskStack(Stack):
         self.construct_id = construct_id
 
         self.create_docker_lambda_function()
+        self.add_role_policy_cognito()
+
         self.create_api_gateway()
 
     def create_docker_lambda_function(self):
@@ -21,6 +23,20 @@ class FlaskStack(Stack):
             # architecture=aws_lambda.Architecture.ARM_64,
             code=aws_lambda.DockerImageCode.from_image_asset(path_to_function_folder),
             environment={}
+        )
+
+    def add_role_policy_cognito(self):
+        self.docker_lambda_function.add_to_role_policy(
+            aws_iam.PolicyStatement(
+                sid='VisualEditor0',
+                effect=aws_iam.Effect.ALLOW,
+                actions=[
+                    "cognito-idp:AdminInitiateAuth",
+                    "cognito-idp:GetUser",
+                    "cognito-idp:AdminRespondToAuthChallenge"
+                ],
+                resources=['*']
+            )
         )
 
     def create_api_gateway(self):
