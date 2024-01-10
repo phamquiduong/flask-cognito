@@ -11,4 +11,4 @@ class ErrorResponseSchema(BaseModel):
     code: str
     message: str | None
     error_code: str | None
-    error_fields: list[ErrorField] | None = None
+    error_fields: list[ErrorField] | list[dict[str, str]] | None = None
