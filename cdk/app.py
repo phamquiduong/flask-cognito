@@ -1,5 +1,5 @@
 import aws_cdk as cdk
-from stack import FlaskStack
+from stack.flask_stack import FlaskStack
 
 CONSTRUCT_ID = 'Flask'
 
