@@ -73,6 +73,10 @@ Langage | Framework | User Management | Build | Deploy
 >   cp .env.example .env
 >   ```
 >   * Change `IS_ARM64=true` if you use AppleM1
+> * Install CDK Python package
+>   ```bash
+>   pip install -r requirements.txt
+>   ```
 
 #### CDK command
 > * List all stacks in the app
@@ -99,3 +103,36 @@ Langage | Framework | User Management | Build | Deploy
 >   ```
 >   cdk docs
 >   ```
+
+<br>
+
+# Project structure
+```
+cdk_lambda_flask
+├─ 📁cdk
+│  ├─ 📁stack 
+│  ├─ 📄.env.example            # CDK environment example
+│  └─ 📄requirements.txt        # CDK deploy package
+├─ 📁docker
+│  ├─ 📁flask
+│  ├─ 📁nginx
+│  ├─ 📄.env.example            # Docker environment example
+│  └─ 📄docker-compose.yml      # Docker compose
+└─ 📁src
+   ├─ 📁apps
+   │  └─ 📁auth                 # Authentication application
+   │     ├─ 📁constants
+   │     ├─ 📁helpers
+   │     ├─ 📁schemas
+   │     ├─ 📁services
+   │     └─ 📄routes.py
+   ├─ 📁core                    # Flask core module
+   │  ├─ 📁decorator
+   │  ├─ 📁errors
+   │  ├─ 📁schema
+   │  ├─ 📁utils
+   ├─ 📄.env.example            # Flask environment example
+   ├─ 📄Dockerfile              # CDK Dockerfile
+   ├─ 📄main.py                 # Flask application
+   └─ 📄requirements.txt        # Flask package requirements
+```
