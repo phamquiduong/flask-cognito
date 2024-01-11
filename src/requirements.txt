@@ -1,12 +1,12 @@
 # Load environment variables
-python-dotenv
+python-dotenv==1.0.0
 
 # Flask framework
-flask
+flask==3.0.0
 
 # Pydantic
-pydantic
-pydantic[email]
+pydantic==2.5.3
+email-validator==2.1.0.post1
 
 # AWS SDK
-boto3
+boto3==1.34.15

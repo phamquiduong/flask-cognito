@@ -39,6 +39,10 @@ Langage | Framework | User Management | Build | Deploy
 >   ```
 
 #### Docker compose command
+> * Create a network
+>   ```bash
+>   docker network create flask_network
+>   ```
 > * Build or rebuild services
 >   ```bash
 >   docker-compose build
@@ -47,7 +51,8 @@ Langage | Framework | User Management | Build | Deploy
 >   ```bash
 >   docker-compose up
 >   ```
->   * You can use option `-d` (detached mode) to run containers in the background
+>   * `-d` : (Detached mode) to run containers in the background
+>   * `--build` : Build images before starting containers.
 > * Stop services
 >   ```bash
 >   docker-compose stop
@@ -67,6 +72,7 @@ Langage | Framework | User Management | Build | Deploy
 >   ```bash
 >   cp .env.example .env
 >   ```
+>   * Change `IS_ARM64=true` if you use AppleM1
 
 #### CDK command
 > * List all stacks in the app
