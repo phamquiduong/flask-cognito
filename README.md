@@ -1,58 +1,95 @@
+# Flask with AWS Cognito
+> * Flask with AWS Cognito
+> * Build with docker-compose
+> * Deploy by AWS CDK
 
-# Welcome to your CDK Python project!
+<br>
 
-This is a blank project for CDK development with Python.
+# Development
+Langage | Framework | User Management | Build | Deploy
+--- | ---| --- | --- | --- |
+[Python 3.11](https://peps.python.org/pep-0664/) | [Flask 3.0.x](https://flask.palletsprojects.com/en/3.0.x/) | [AWS Cognito](https://aws.amazon.com/pm/cognito/) | [Docker compose](https://docs.docker.com/compose/) | [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/home.html)
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+<br>
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+# Installation
+## Project
+> * Change directory to src folder
+>   ```bash
+>   cd src/
+>   ```
+> * Copy and config project environment variables
+>   ```bash
+>   cp .env.example .env
+>   ```
+> * Install Python package
+>   ```bash
+>   pip install -r requirements.txt
+>   ```
 
-To manually create a virtualenv on MacOS and Linux:
 
-```
-$ python3 -m venv .venv
-```
+## Build with docker compose
+> * Change directory to docker folder
+>   ```bash
+>   cd docker/
+>   ```
+> * Copy and config docker compose environment variables
+>   ```bash
+>   cp .env.example .env
+>   ```
 
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
+#### Docker compose command
+> * Build or rebuild services
+>   ```bash
+>   docker-compose build
+>   ```
+> * Create and start containers
+>   ```bash
+>   docker-compose up
+>   ```
+>   * You can use option `-d` (detached mode) to run containers in the background
+> * Stop services
+>   ```bash
+>   docker-compose stop
+>   ```
+> * Stop and remove containers, networks
+>   ```bash
+>   docker-compose down
+>   ```
 
-```
-$ source .venv/bin/activate
-```
 
-If you are a Windows platform, you would activate the virtualenv like this:
+## Deploy with CDK
+> * Change directory to CDK folder
+>   ```bash
+>   cd cdk/
+>   ```
+> * Copy and config CDK environment variables
+>   ```bash
+>   cp .env.example .env
+>   ```
 
-```
-% .venv\Scripts\activate.bat
-```
-
-Once the virtualenv is activated, you can install the required dependencies.
-
-```
-$ pip install -r requirements.txt
-```
-
-At this point you can now synthesize the CloudFormation template for this code.
-
-```
-$ cdk synth
-```
-
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
-
-## Useful commands
-
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
-
-Enjoy!
+#### CDK command
+> * List all stacks in the app
+>   ```
+>   cdk ls
+>   ```
+> * Emits the synthesized CloudFormation template
+>   ```
+>   cdk synth
+>   ```
+> * Process of provisioning resources for the AWS CDK
+>   ```
+>   cdk bootstrap
+>   ```
+> * Deploy this stack to your default AWS account region
+>   ```
+>   cdk deploy
+>   ```
+> * Compare deployed stack with current state
+>   ```
+>   cdk diff
+>   ```
+> * Open CDK documentation
+>   ```
+>   cdk docs
+>   ```
