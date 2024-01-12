@@ -25,7 +25,8 @@ class FlaskStack(Stack):
             id=f"{self.construct_id}-Lambda",
             code=aws_lambda.DockerImageCode.from_image_asset(path_to_function_folder),
             timeout=Duration.seconds(30),
-            **architecure_config
+            **architecure_config,
+            environment={'IS_RUN_ON_LAMBDA': 'true'},
         )
 
     def add_role_policy_cognito(self):

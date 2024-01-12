@@ -12,7 +12,7 @@ class Config:
 
     LOG_LEVEL = os.getenv('LOG_LEVEL', 'DEBUG')
     LOG_DIR = BASE_DIR / '../log'
-    LOG_HANDLER = os.getenv('LOG_HANDLER', '').split(',') if os.getenv('CONSTRUCT_ID', None) is None else []
+    LOG_HANDLER = os.getenv('LOG_HANDLER', '').split(',')
 
     AWS_REGION = os.environ['AWS_REGION']
     USER_POOL_ID = os.environ['USER_POOL_ID']
