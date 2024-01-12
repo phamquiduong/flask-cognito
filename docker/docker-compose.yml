@@ -8,8 +8,14 @@ services:
       dockerfile: docker/flask/Dockerfile
     expose:
       - ${FLASK_PORT}
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - REGION=${REGION}
+      - LOG_HANDLER=${LOG_HANDLER}
     volumes:
       - ../src:/src
+      - ../log:/log
     command: bash -c "cd src && gunicorn --bind 0.0.0.0:${FLASK_PORT} 'main:create_app()' --reload"
     restart: always
 

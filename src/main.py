@@ -1,40 +1,40 @@
-from flask import Flask
 from werkzeug.exceptions import HTTPException
 
-from core.config import Config
-from core.errors.handle_exception import exception_handler, http_exception_handler
-from core.logger import logger
 
+def create_app(env_file: str = '.env'):
+    # Load environment variables
+    from dotenv import load_dotenv
+    load_dotenv(env_file)
 
-def create_app(config_class=Config):
-    logger.info('Creating app')
+    # Create Flask application
+    from flask import Flask
     app = Flask(__name__)
-    app.config.from_object(config_class)
+
+    # Configure Flask
+    from core.config import Config
+    app.config.from_object(Config)
 
     # Custom exception handler
+    from core.errors.handle_exception import exception_handler, http_exception_handler
     app.register_error_handler(HTTPException, http_exception_handler)
     app.register_error_handler(Exception, exception_handler)
 
     # Register Flask blueprint
-    logger.info('Register authenticate blueprint')
     from apps.auth.routes import auth_route
     app.register_blueprint(auth_route, url_prefix='/auth')
 
-    logger.info('Create app success %s', app)
     return app
 
 
 def handler(event, context):
-    logger.info('Event: %s', event)
-    logger.info('Context: %s', context)
-
-    logger.info('Start create app')
     app = create_app()
 
-    logger.info('Config CORS for app')
     from flask_cors import CORS
     CORS(app)
 
-    logger.info('Start awsgi server')
+    from core.logger import logger
+    logger.info('Event: %s', event)
+    logger.info('Context: %s', context)
+
     import awsgi
     return awsgi.response(app, event, context)

@@ -15,3 +15,6 @@ cdk.out
 # Docker-compose
 docker/nginx/config/nginx.conf
 docker/nginx/log/
+
+# Flask log
+log/
