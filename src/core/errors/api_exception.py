@@ -22,8 +22,7 @@ class APIException(HTTPException):
 
     def dump(self, exclude_none: bool = True):
         return ErrorResponseSchema(
-            status_code=self.status,
-            code=self.status.name,
+            status_code=self.status, code=self.status.name,
             error_code=f'ERR-{self.status}-{self.api_code:03d}-{self.api_error_code:03d}',
             message=self.description or self.status.description,
             error_fields=[{'field': field, 'message': msg} for field, msg in self.error_fields.items()] or None

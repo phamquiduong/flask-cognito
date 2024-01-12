@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from typing import Any
 
 from flask import Response, jsonify
 from pydantic import BaseModel, ValidationError
@@ -17,8 +18,7 @@ def response_jsonify(status_code: HTTPStatus | int = HTTPStatus.OK, api_code: in
                 logger.error(valid_error)
                 error_fields = {str(next(iter(error["loc"]), '__all__')): error["msg"]
                                 for error in valid_error.errors()}
-                return BadRequestException(api_code=api_code,
-                                           error_fields=error_fields,
+                return BadRequestException(api_code=api_code, error_fields=error_fields,
                                            message='Invalid request data').dump_response()
             except APIException as api_exc:
                 logger.error(api_exc)
@@ -28,18 +28,19 @@ def response_jsonify(status_code: HTTPStatus | int = HTTPStatus.OK, api_code: in
                 logger.error(http_exc)
                 return APIException(api_code=api_code, status=http_exc.code,
                                     message=http_exc.description).dump_response()
-            except Exception as exc:  # pylint: disable=broad-except
+            except Exception as exc:                                    # pylint: disable=broad-except
                 logger.error(exc)
                 return APIException(api_code=api_code, message=str(exc)).dump_response()
 
-            if (isinstance(response, Response)
-                    or (isinstance(response, tuple) and isinstance(next(iter(response), None), Response))):
-                return response
+            return __get_response(response)
 
+        def __get_response(response):
+            if type(response) is Response | tuple[Response, Any]:       # pylint: disable=C0123
+                return response
             if isinstance(response, BaseModel):
                 return jsonify(response.model_dump()), status_code
-
             return jsonify(response), status_code
+
         wrapper.__name__ = func.__name__
         return wrapper
     return inner
