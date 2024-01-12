@@ -1,4 +1,4 @@
-# Load environment variables
+# Python
 python-dotenv==1.0.0
 
 # Flask framework

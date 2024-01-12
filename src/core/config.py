@@ -1,5 +1,12 @@
 import os
 from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
+
+# Load environment variables
+if not load_dotenv():
+    raise FileNotFoundError('Environment variable not found')
 
 
 class Config:
@@ -14,6 +21,23 @@ class Config:
     LOG_DIR = BASE_DIR / '../log'
     LOG_HANDLER = os.getenv('LOG_HANDLER', '').split(',')
 
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
     AWS_REGION = os.environ['AWS_REGION']
     USER_POOL_ID = os.environ['USER_POOL_ID']
     CLIENT_ID = os.environ['CLIENT_ID']
+
+
+class ConfigClass:
+    def __init__(self):
+        self.__config_class = None
+
+    def set_class(self, config_class):
+        self.__config_class = config_class
+
+    def get(self, key: str, default: Any = None):
+        return getattr(self.__config_class, key) if default is None else getattr(self.__config_class, key, default)
+
+
+config = ConfigClass()

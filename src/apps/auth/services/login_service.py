@@ -1,15 +1,14 @@
 import botocore.exceptions
 
 from apps.auth.constants.errors.login_error_constant import ERROR_CODE
-from apps.auth.helpers.cognito_helper import CognitoHelper
+from apps.auth.helpers.cognito_helper import cognito_helper
 from apps.auth.schemas.login_schema import LoginRequest, LoginResponse
 from core.errors.api_exception import BadRequestException, UnauthorizedException
 from core.logger import logger
 
 
 def login_service(request: LoginRequest):
-    cognito_helper = CognitoHelper()
-    response = __login_by_email_password(cognito_helper, request.email, request.password)
+    response = __login_by_email_password(request.email, request.password)
 
     if response.get('ChallengeName', '') == 'NEW_PASSWORD_REQUIRED':
         if request.new_password is None:
@@ -19,13 +18,13 @@ def login_service(request: LoginRequest):
                 error_fields={'new_password': 'Field required'}
             )
         cognito_helper.admin_respond_to_auth_challenge(response['Session'], request.email, request.new_password)
-        response = __login_by_email_password(cognito_helper, request.email, request.new_password)
+        response = __login_by_email_password(request.email, request.new_password)
 
     access_token = response['AuthenticationResult']['AccessToken']
     return LoginResponse(access_token=access_token)
 
 
-def __login_by_email_password(cognito_helper: CognitoHelper, email: str, password: str):
+def __login_by_email_password(email: str, password: str):
     try:
         return cognito_helper.admin_initiate_auth(username=email, password=password)
     except botocore.exceptions.ClientError as err:

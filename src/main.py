@@ -1,18 +1,16 @@
+from flask import Flask
 from werkzeug.exceptions import HTTPException
 
+from core.config import Config, config
 
-def create_app(env_file: str = '.env'):
-    # Load environment variables
-    from dotenv import load_dotenv
-    load_dotenv(env_file)
 
+def create_app(config_class=Config):
     # Create Flask application
-    from flask import Flask
     app = Flask(__name__)
 
     # Configure Flask
-    from core.config import Config
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
+    config.set_class(config_class)
 
     # Custom exception handler
     from core.errors.handle_exception import exception_handler, http_exception_handler

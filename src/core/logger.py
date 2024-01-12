@@ -2,11 +2,11 @@ import logging
 import os
 from logging.config import dictConfig
 
-from core.config import Config
+from core.config import config
 
-if os.getenv('IS_RUN_ON_LAMBDA', None) is None:
+if os.getenv('IS_RUN_ON_LAMBDA', None) is None and config.get('TESTING') is False:
     # Create log directory
-    Config.LOG_DIR.mkdir(parents=True, exist_ok=True)
+    config.get('LOG_DIR').mkdir(parents=True, exist_ok=True)
 
     dictConfig({
         'version': 1,
@@ -19,25 +19,25 @@ if os.getenv('IS_RUN_ON_LAMBDA', None) is None:
         },
         'handlers': {
             'console': {
-                'level': Config.LOG_LEVEL,
+                'level': config.get('LOG_LEVEL'),
                 'class': 'logging.StreamHandler',
                 'formatter': 'default',
             },
             'file': {
-                'level': Config.LOG_LEVEL,
+                'level': config.get('LOG_LEVEL'),
                 'class': 'logging.handlers.RotatingFileHandler',
                 'formatter': 'default',
-                'filename': Config.LOG_DIR / 'root.log',
+                'filename': config.get('LOG_DIR') / 'root.log',
                 'maxBytes': 50000,
                 'backupCount': 5,
             },
 
         },
         'root': {
-            'handlers': Config.LOG_HANDLER,
+            'handlers': config.get('LOG_HANDLER'),
             'propagate': True,
         }
     })
 
 logger = logging.getLogger()
-logger.setLevel(Config.LOG_LEVEL)
+logger.setLevel(config.get('LOG_LEVEL', 'DEBUG'))
