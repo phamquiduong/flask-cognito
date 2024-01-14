@@ -1,10 +1,12 @@
+from typing import Any
+
 from flask import Flask
 from werkzeug.exceptions import HTTPException
 
 from core.config import Config, config
 
 
-def create_app(config_class=Config):
+def create_app(config_class: Any = Config):
     # Create Flask application
     app = Flask(__name__)
 
