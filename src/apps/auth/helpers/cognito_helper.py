@@ -39,8 +39,8 @@ class CognitoHelper:
             })
 
 
-cognito_helper = CognitoHelper(aws_access_key_id=config.get('USER_POOL_ID'),
-                               aws_secret_access_key=config.get('CLIENT_ID'),
-                               region_name=config.get('AWS_ACCESS_KEY_ID'),
-                               user_pool_id=config.get('AWS_SECRET_ACCESS_KEY'),
-                               client_id=config.get('AWS_REGION'))
+cognito_helper = CognitoHelper(aws_access_key_id=config.get('AWS_ACCESS_KEY_ID'),
+                               aws_secret_access_key=config.get('AWS_SECRET_ACCESS_KEY'),
+                               region_name=config.get('AWS_REGION'),
+                               user_pool_id=config.get('USER_POOL_ID'),
+                               client_id=config.get('CLIENT_ID'))
