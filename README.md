@@ -108,31 +108,35 @@ Langage | Framework | User Management | Build | Deploy
 
 # Project structure
 ```
-cdk_lambda_flask
+flask-cognito-example
 ├─ 📁cdk
 │  ├─ 📁stack 
-│  ├─ 📄.env.example            # CDK environment example
-│  └─ 📄requirements.txt        # CDK deploy package
+│  ├─ 📄.env.example             # CDK environment example
+│  └─ 📄requirements.txt         # CDK deploy package
 ├─ 📁docker
 │  ├─ 📁flask
 │  ├─ 📁nginx
-│  ├─ 📄.env.example            # Docker environment example
-│  └─ 📄docker-compose.yml      # Docker compose
-└─ 📁src
-   ├─ 📁apps
-   │  └─ 📁auth                 # Authentication application
-   │     ├─ 📁constants
-   │     ├─ 📁helpers
-   │     ├─ 📁schemas
-   │     ├─ 📁services
-   │     └─ 📄routes.py
-   ├─ 📁core                    # Flask core module
-   │  ├─ 📁decorator
-   │  ├─ 📁errors
-   │  ├─ 📁schema
-   │  ├─ 📁utils
-   ├─ 📄.env.example            # Flask environment example
-   ├─ 📄Dockerfile              # CDK Dockerfile
-   ├─ 📄main.py                 # Flask application
-   └─ 📄requirements.txt        # Flask package requirements
+│  ├─ 📄.env.example             # Docker environment example
+│  └─ 📄docker-compose.yml       # Docker compose
+├─ 📁src
+├  ├─ 📁apps
+├  │  └─ 📁auth                  # Authentication application
+├  │     ├─ 📁constants
+├  │     ├─ 📁helpers
+├  │     ├─ 📁schemas
+├  │     ├─ 📁services
+├  │     └─ 📄routes.py
+├  ├─ 📁core                     # Flask core module
+├  │  ├─ 📁decorator
+├  │  ├─ 📁errors
+├  │  ├─ 📁schema
+├  │  ├─ 📁utils
+├  ├─ 📄.env.example             # Flask environment example
+├  ├─ 📄Dockerfile               # CDK Dockerfile
+├  ├─ 📄main.py                  # Flask application
+├  └─ 📄requirements.txt         # Flask package requirements
+└─ 📁tests
+   ├─ 📁auth
+   ├─ 📄config.example.py        # Pytest configuration
+   └─ 📄conftest.py              # Pytest main
 ```
