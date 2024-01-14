@@ -8,9 +8,12 @@ class CognitoHelper:
                  user_pool_id: str, client_id: str) -> None:
         self.user_pool_id = user_pool_id
         self.client_id = client_id
+
+        config_key = {'aws_access_key_id': aws_access_key_id, 'aws_secret_access_key': aws_secret_access_key} \
+            if config.get('IS_RUN_ON_LAMBDA') is False else {}
+
         self.client = boto3.client('cognito-idp',
-                                   aws_access_key_id=aws_access_key_id,
-                                   aws_secret_access_key=aws_secret_access_key,
+                                   **config_key,
                                    region_name=region_name)
 
     def admin_initiate_auth(self, username: str, password: str):

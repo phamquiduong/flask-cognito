@@ -1,10 +1,9 @@
 import logging
-import os
 from logging.config import dictConfig
 
 from core.config import config
 
-if os.getenv('IS_RUN_ON_LAMBDA', None) is None and config.get('TESTING') is False:
+if config.get('IS_RUN_ON_LAMBDA') is False and config.get('TESTING') is False:
     # Create log directory
     config.get('LOG_DIR').mkdir(parents=True, exist_ok=True)
 

@@ -24,6 +24,8 @@ class Config:
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
+    IS_RUN_ON_LAMBDA = os.getenv('IS_RUN_ON_LAMBDA', None) is not None
+
     AWS_REGION = os.environ['AWS_REGION']
     USER_POOL_ID = os.environ['USER_POOL_ID']
     CLIENT_ID = os.environ['CLIENT_ID']
