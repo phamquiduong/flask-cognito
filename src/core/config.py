@@ -12,7 +12,7 @@ if not load_dotenv():
 class Config:
     BASE_DIR = Path(__file__).resolve().parent.parent
 
-    SECRET_KEY = os.environ['SECRET_KEY']
+    SECRET_KEY = os.getenv('SECRET_KEY', '')
 
     DEBUG = os.getenv('DEBUG', 'true').lower() == 'true'
     TESTING = os.getenv('TESTING', 'true').lower() == 'true'
@@ -21,14 +21,14 @@ class Config:
     LOG_DIR = BASE_DIR / '../log'
     LOG_HANDLER = os.getenv('LOG_HANDLER', '').split(',')
 
-    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
 
     IS_RUN_ON_LAMBDA = os.getenv('IS_RUN_ON_LAMBDA', None) is not None
 
-    AWS_REGION = os.environ['AWS_REGION']
-    USER_POOL_ID = os.environ['USER_POOL_ID']
-    CLIENT_ID = os.environ['CLIENT_ID']
+    AWS_REGION = os.getenv('AWS_REGION', '')
+    USER_POOL_ID = os.getenv('USER_POOL_ID', '')
+    CLIENT_ID = os.getenv('CLIENT_ID', '')
 
 
 class ConfigClass:

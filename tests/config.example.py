@@ -8,6 +8,7 @@ class Config:
 
     DEBUG = False
     TESTING = True
+    IS_RUN_ON_LAMBDA = False
 
     AWS_ACCESS_KEY_ID = ''
     AWS_SECRET_ACCESS_KEY = ''
