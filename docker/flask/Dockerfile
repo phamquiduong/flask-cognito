@@ -11,8 +11,8 @@ RUN pip install --no-cache-dir --upgrade pip
 
 
 # Install python packet
-COPY docker/flask/requirements-docker.txt /
-RUN pip install -r requirements-docker.txt
+COPY docker/flask/requirements.txt /
+RUN pip install -r requirements.txt
 
 COPY src/requirements.txt /
 RUN pip install -r requirements.txt
